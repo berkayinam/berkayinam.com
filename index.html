@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Berkay İnam | DevOps Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body x-data="{ mobileMenuOpen: false, activeTab: 'all' }">
+  <!-- Header/Navbar -->
+  <header class="bg-white shadow-sm sticky top-0 z-50 dark:bg-black transition-colors duration-200">
+    <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex justify-between items-center">
+        <a href="#" class="text-2xl font-bold logo-text">Berkay <span class="text-theme-dark dark:text-white">İnam</span></a>
+        
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-8">
+          <a href="#about" class="text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">Hakkımda</a>
+          <a href="#skills" class="text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">Yetenekler</a>
+          <a href="#experience" class="text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">Deneyim</a>
+          <a href="#projects" class="text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">Projeler</a>
+          <a href="#gallery" class="text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">Galeri</a>
+          <a href="#blog" class="text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">Blog</a>
+          <a href="#contact" class="text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">İletişim</a>
+          
+          <!-- Theme toggle button -->
+          <button id="theme-toggle" class="text-gray-600 dark:text-gray-300 hover:text-theme-primary dark:hover:text-theme-primary focus:outline-none">
+            <i id="theme-toggle-dark-icon" class="fas fa-moon text-xl"></i>
+            <i id="theme-toggle-light-icon" class="fas fa-sun text-xl hidden"></i>
+          </button>
+        </div>
+        
+        <!-- Mobile Menu Button -->
+        <button 
+          @click="mobileMenuOpen = !mobileMenuOpen" 
+          class="md:hidden text-gray-600 dark:text-gray-300 focus:outline-none"
+        >
+          <i x-show="!mobileMenuOpen" class="fas fa-bars text-xl"></i>
+          <i x-show="mobileMenuOpen" class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+      
+      <!-- Mobile Menu -->
+      <div 
+        x-show="mobileMenuOpen" 
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 -translate-y-4"
+        x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 translate-y-0"
+        x-transition:leave-end="opacity-0 -translate-y-4"
+        class="md:hidden mt-4 space-y-2 py-2"
+      >
+        <a href="#about" @click="mobileMenuOpen = false" class="block py-2 text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">Hakkımda</a>
+        <a href="#skills" @click="mobileMenuOpen = false" class="block py-2 text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">Yetenekler</a>
+        <a href="#experience" @click="mobileMenuOpen = false" class="block py-2 text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">Deneyim</a>
+        <a href="#projects" @click="mobileMenuOpen = false" class="block py-2 text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">Projeler</a>
+        <a href="#gallery" @click="mobileMenuOpen = false" class="block py-2 text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">Galeri</a>
+        <a href="#blog" @click="mobileMenuOpen = false" class="block py-2 text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">Blog</a>
+        <a href="#contact" @click="mobileMenuOpen = false" class="block py-2 text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">İletişim</a>
+        <div class="py-2 flex items-center">
+          <span class="text-gray-600 dark:text-gray-300 mr-3">Tema</span>
+          <button id="mobile-theme-toggle" class="text-gray-600 dark:text-gray-300 hover:text-theme-primary dark:hover:text-theme-primary focus:outline-none" @click="mobileMenuOpen = false">
+            <i class="fas fa-moon text-xl"></i>
+            <i class="fas fa-sun text-xl hidden"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-theme-primary to-theme-secondary text-white py-20 dark:bg-gradient-to-r dark:from-gray-900 dark:to-black">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-center">
+        <div class="md:w-1/2 mb-8 md:mb-0">
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white">
+            Merhaba, Ben <span class="text-white">Berkay İnam</span>
+          </h1>
+          <p class="text-xl md:text-2xl text-gray-100 mb-8">DevOps Engineer & Backend Developer</p>
+          <div class="flex space-x-4">
+            <a href="https://github.com/berkayinam" target="_blank" class="btn-secondary">
+              <i class="fab fa-github mr-2"></i> GitHub
+            </a>
+            <a href="https://medium.com/@berkayinam" target="_blank" class="btn-outline">
+              <i class="fab fa-medium mr-2"></i> Medium
+            </a>
+            <a href="https://www.linkedin.com/in/berkay-inam-b16b391ba/" target="_blank" class="btn-primary">
+              <i class="fab fa-linkedin mr-2"></i> LinkedIn
+            </a>
+          </div>
+        </div>
+        <div class="md:w-1/2 flex justify-center">
+          <div class="w-64 h-64 rounded-full bg-white/20 border-4 border-white overflow-hidden shadow-lg dark:bg-gray-800/20 dark:border-gray-700">
+            <!-- Replace with your profile image -->
+            <img src="https://via.placeholder.com/256x256?text=Berkay+Inam" alt="Berkay İnam" class="w-full h-full object-cover">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section bg-gray-50 dark:bg-dark-primary">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="section-title">Hakkımda</h2>
+      <div class="max-w-3xl mx-auto text-lg text-gray-600 space-y-4">
+        <p>24 yaşında, İstanbul/Türkiye'de yaşayan tutkulu bir DevOps Mühendisi ve Go Backend API geliştiricisiyim. 🇹🇷</p>
+        <p>Yazılım hayatıma 2017 yılında Lise'de başladım. Birçok alanda yazılım deneyip tecrübe edindikten sonra DevOps alanında derinleşmeye karar verdim. Linux sistemler, container teknolojileri ve otomasyon süreçlerine karşı özel bir ilgi duyuyorum.</p>
+        <p>İlgimi çeken süreçler Container Orchestration ve sanallaştırma teknolojileri, CI/CD Pipelines, Configuration management ve Bug tracking araçları, test otomasyonu ve analizi.</p>
+        <p class="font-semibold italic">"Deneme.txt bile olsa otomasyona bağlarım - otomasyon benim hayatım 💙"</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="section dark:bg-black">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="section-title">Yeteneklerim</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- DevOps Skills -->
+        <div class="card p-6">
+          <div class="text-center mb-4">
+            <i class="fas fa-server text-4xl text-accent"></i>
+            <h3 class="text-xl font-semibold mt-3">DevOps & Cloud</h3>
+          </div>
+          <ul class="space-y-2">
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              <span>Docker, Kubernetes, Openshift</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              <span>Jenkins, Ansible, Terraform</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              <span>AWS S3, EC2</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              <span>Git, GitHub, GitLab</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              <span>Jira, Confluence</span>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Programming Languages -->
+        <div class="card p-6">
+          <div class="text-center mb-4">
+            <i class="fas fa-code text-4xl text-accent"></i>
+            <h3 class="text-xl font-semibold mt-3">Programlama Dilleri</h3>
+          </div>
+          <ul class="space-y-2">
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              <span>Go</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              <span>C, C++ (98 standart)</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              <span>C# (Console & Form Applications)</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              <span>Python (Django)</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              <span>Bash</span>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Databases -->
+        <div class="card p-6">
+          <div class="text-center mb-4">
+            <i class="fas fa-database text-4xl text-accent"></i>
+            <h3 class="text-xl font-semibold mt-3">Veritabanları</h3>
+          </div>
+          <ul class="space-y-2">
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              <span>MongoDB</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              <span>PostgreSQL</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              <span>MySQL</span>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- OS & Tools -->
+        <div class="card p-6">
+          <div class="text-center mb-4">
+            <i class="fas fa-laptop-code text-4xl text-accent"></i>
+            <h3 class="text-xl font-semibold mt-3">İşletim Sistemleri & Araçlar</h3>
+          </div>
+          <ul class="space-y-2">
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              <span>MacOS / Linux</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              <span>Microsoft Office Suite</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              <span>Adobe (Photoshop, XD, InDesign)</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              <span>Visual Studio & VS Code</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              <span>JetBrains IDEs, Postman</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section id="experience" class="section bg-gray-50 dark:bg-dark-primary">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="section-title">İş Deneyimi</h2>
+      
+      <div class="max-w-4xl mx-auto space-y-8">
+        <!-- Experience Item 1 -->
+        <div class="card p-6">
+          <div class="flex flex-col md:flex-row md:items-start">
+            <div class="mb-4 md:mb-0 md:mr-6">
+              <div class="bg-accent text-white w-16 h-16 rounded-full flex items-center justify-center">
+                <i class="fas fa-briefcase text-2xl"></i>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold mb-1">Fortech Bilişim Sistem Yöneticisi & Danışmanı</h3>
+              <p class="text-gray-500 mb-3">Kasım 2024 - Devam Ediyor</p>
+              <p class="text-gray-700 mb-4">
+                Kasa (NCR), ofis bilgisayarı ve POS sorunları gibi hatalar için Gratis tarafından
+                kodlanan Gratis-4Me platformu üzerinden uzaktan erişim ile Gratis personeline çözüm desteği
+                sağlıyorum. Yardım masası taleplerinin oluşturulması ve ekiplere yönlendirilmesi, yönetilmesi ve
+                çözümlenmesinden sorumluyum. Active directory ile bilgisayar kullanıcı şifre yönetimini
+                sağlıyorum. VNC viewer ile uzak masaüstü bağlantısı kullanarak anlık bilgisayar problemlerini
+                çözüyorum.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Experience Item 2 -->
+        <div class="card p-6">
+          <div class="flex flex-col md:flex-row md:items-start">
+            <div class="mb-4 md:mb-0 md:mr-6">
+              <div class="bg-accent text-white w-16 h-16 rounded-full flex items-center justify-center">
+                <i class="fas fa-code-branch text-2xl"></i>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold mb-1">Turkcell IT & NT Otomasyon Çözümleri</h3>
+              <p class="text-gray-500 mb-3">2024 - 4 ay staj</p>
+              <p class="text-gray-700 mb-4">
+                Stajıma ekipte DevOps sorumlusu olarak başladım. Kubernetes ve Docker eğitimleri aldım. 
+                Openshift platformunda altyapı mimarisi üzerine çalıştım. "Erişim Sağlama Sistemi" adında 
+                lokal olarak monolitik çalışan bir Turkcell projesinin servis odaklı olarak Openshift ortamına 
+                taşınması ve altyapısının hazırlanmasında görev aldım. Dağıtım konfigürasyonları ve PVC'ler arasındaki 
+                iletişim ile ilgili süreçlerde yer aldım. Bulut Teknolojileri ve DevOps Teknolojileri üzerine 2 büyük 
+                sunum yaptım.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Experience Item 3 -->
+        <div class="card p-6">
+          <div class="flex flex-col md:flex-row md:items-start">
+            <div class="mb-4 md:mb-0 md:mr-6">
+              <div class="bg-accent text-white w-16 h-16 rounded-full flex items-center justify-center">
+                <i class="fas fa-laptop text-2xl"></i>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold mb-1">TUYAP İT Departmanı</h3>
+              <p class="text-gray-500 mb-3">2019 - 40 günlük staj</p>
+              <p class="text-gray-700 mb-4">
+                TÜYAP'ta sunucu ve bilgisayar bakımı üzerine staj yaptım. TÜYAP fuar giriş kapılarında 
+                ziyaretçi kartlarının okunması ve okutulması için Zebra GK420T barkod yazıcı üzerinde çalıştım. 
+                Ayrıca TÜYAP'ın tüm bilgisayar teknik sorunları üzerinde çalıştım. Bu görevler arasında windows 
+                sorunları, yazıcılar, teknik sorunlar, bilgisayar donanımları ve bilgisayar program kurulumları 
+                yer almaktadır.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="section dark:bg-black">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="section-title">Projeler</h2>
+      
+      <div class="flex justify-center mb-8">
+        <div class="inline-flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+          <button 
+            @click="activeTab = 'all'" 
+            :class="{'bg-white dark:bg-gray-700 shadow-md': activeTab === 'all', 'hover:bg-white/60 dark:hover:bg-gray-700/60': activeTab !== 'all'}"
+            class="px-4 py-2 rounded-md text-sm font-medium transition-all dark:text-white"
+          >
+            Tümü
+          </button>
+          <button 
+            @click="activeTab = 'devops'" 
+            :class="{'bg-white dark:bg-gray-700 shadow-md': activeTab === 'devops', 'hover:bg-white/60 dark:hover:bg-gray-700/60': activeTab !== 'devops'}"
+            class="px-4 py-2 rounded-md text-sm font-medium transition-all dark:text-white"
+          >
+            DevOps
+          </button>
+          <button 
+            @click="activeTab = 'programming'" 
+            :class="{'bg-white dark:bg-gray-700 shadow-md': activeTab === 'programming', 'hover:bg-white/60 dark:hover:bg-gray-700/60': activeTab !== 'programming'}"
+            class="px-4 py-2 rounded-md text-sm font-medium transition-all dark:text-white"
+          >
+            Programlama
+          </button>
+          <button 
+            @click="activeTab = '42'" 
+            :class="{'bg-white dark:bg-gray-700 shadow-md': activeTab === '42', 'hover:bg-white/60 dark:hover:bg-gray-700/60': activeTab !== '42'}"
+            class="px-4 py-2 rounded-md text-sm font-medium transition-all dark:text-white"
+          >
+            42 Projeleri
+          </button>
+        </div>
+      </div>
+      
+      <!-- Projects Grid - Will be dynamically populated with GitHub projects -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-container">
+        <!-- Projects will be loaded from GitHub API -->
+        <div class="card animate-pulse">
+          <div class="bg-gray-300 h-48 w-full"></div>
+          <div class="p-4">
+            <div class="h-6 bg-gray-300 rounded w-3/4 mb-3"></div>
+            <div class="h-4 bg-gray-300 rounded mb-2 w-full"></div>
+            <div class="h-4 bg-gray-300 rounded mb-2 w-5/6"></div>
+            <div class="h-4 bg-gray-300 rounded w-4/6"></div>
+          </div>
+        </div>
+        <div class="card animate-pulse">
+          <div class="bg-gray-300 h-48 w-full"></div>
+          <div class="p-4">
+            <div class="h-6 bg-gray-300 rounded w-3/4 mb-3"></div>
+            <div class="h-4 bg-gray-300 rounded mb-2 w-full"></div>
+            <div class="h-4 bg-gray-300 rounded mb-2 w-5/6"></div>
+            <div class="h-4 bg-gray-300 rounded w-4/6"></div>
+          </div>
+        </div>
+        <div class="card animate-pulse">
+          <div class="bg-gray-300 h-48 w-full"></div>
+          <div class="p-4">
+            <div class="h-6 bg-gray-300 rounded w-3/4 mb-3"></div>
+            <div class="h-4 bg-gray-300 rounded mb-2 w-full"></div>
+            <div class="h-4 bg-gray-300 rounded mb-2 w-5/6"></div>
+            <div class="h-4 bg-gray-300 rounded w-4/6"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="section bg-gray-50 dark:bg-dark-primary">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="section-title">Yarışma ve Etkinlik Galerisi</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Gallery items - These can be replaced with actual event photos -->
+        <div class="card overflow-hidden group">
+          <div class="relative h-64 overflow-hidden">
+            <img src="https://via.placeholder.com/600x400?text=Hackathon+2023" alt="Hackathon 2023" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <p class="text-white text-center px-4">Paribu sosyal fayda için hackathon, 2023</p>
+            </div>
+          </div>
+        </div>
+        <div class="card overflow-hidden group">
+          <div class="relative h-64 overflow-hidden">
+            <img src="https://via.placeholder.com/600x400?text=FRC+2019" alt="FRC 2019" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <p class="text-white text-center px-4">FRC Ankara OffSeason Finali, 2019 - 1.lik</p>
+            </div>
+          </div>
+        </div>
+        <div class="card overflow-hidden group">
+          <div class="relative h-64 overflow-hidden">
+            <img src="https://via.placeholder.com/600x400?text=Bilisim+Vadisi+2023" alt="Bilişim Vadisi 2023" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <p class="text-white text-center px-4">Kocaeli Bilişim Vadisi NFT & Metaverse & Blockchain hackathon Final, 2023 - 1.lik</p>
+            </div>
+          </div>
+        </div>
+        <div class="card overflow-hidden group">
+          <div class="relative h-64 overflow-hidden">
+            <img src="https://via.placeholder.com/600x400?text=Turkcell+Hackathon" alt="Turkcell Hackathon" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <p class="text-white text-center px-4">Turkcel HackXathon Metaverse Kategorisi Final, 2022 - 2.lik</p>
+            </div>
+          </div>
+        </div>
+        <div class="card overflow-hidden group">
+          <div class="relative h-64 overflow-hidden">
+            <img src="https://via.placeholder.com/600x400?text=FRC+Los+Angeles" alt="FRC Los Angeles" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <p class="text-white text-center px-4">FRC Los Angeles Bölgesel Çeyrek Final, 2018 - 7.lik</p>
+            </div>
+          </div>
+        </div>
+        <div class="card overflow-hidden group">
+          <div class="relative h-64 overflow-hidden">
+            <img src="https://via.placeholder.com/600x400?text=Add+Your+Event" alt="Add Your Event" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <p class="text-white text-center px-4">Yeni etkinlik fotoğrafları için yer tutucu</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Section -->
+  <section id="blog" class="section dark:bg-black">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="section-title">Medium Yazılarım</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="medium-posts">
+        <!-- Medium posts will be loaded dynamically -->
+        <div class="card animate-pulse">
+          <div class="bg-gray-300 h-48 w-full"></div>
+          <div class="p-4">
+            <div class="h-6 bg-gray-300 rounded w-3/4 mb-3"></div>
+            <div class="h-4 bg-gray-300 rounded mb-2 w-full"></div>
+            <div class="h-4 bg-gray-300 rounded mb-2 w-5/6"></div>
+            <div class="h-4 bg-gray-300 rounded w-4/6"></div>
+          </div>
+        </div>
+        <div class="card animate-pulse">
+          <div class="bg-gray-300 h-48 w-full"></div>
+          <div class="p-4">
+            <div class="h-6 bg-gray-300 rounded w-3/4 mb-3"></div>
+            <div class="h-4 bg-gray-300 rounded mb-2 w-full"></div>
+            <div class="h-4 bg-gray-300 rounded mb-2 w-5/6"></div>
+            <div class="h-4 bg-gray-300 rounded w-4/6"></div>
+          </div>
+        </div>
+        <div class="card animate-pulse">
+          <div class="bg-gray-300 h-48 w-full"></div>
+          <div class="p-4">
+            <div class="h-6 bg-gray-300 rounded w-3/4 mb-3"></div>
+            <div class="h-4 bg-gray-300 rounded mb-2 w-full"></div>
+            <div class="h-4 bg-gray-300 rounded mb-2 w-5/6"></div>
+            <div class="h-4 bg-gray-300 rounded w-4/6"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="section bg-gray-50 dark:bg-dark-primary">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="section-title">İletişim</h2>
+      
+      <div class="max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="card p-6">
+            <h3 class="text-2xl font-bold mb-4">İletişim Bilgileri</h3>
+            <ul class="space-y-4">
+              <li class="flex items-start">
+                <div class="text-accent mt-1 mr-3">
+                  <i class="fas fa-envelope text-xl"></i>
+                </div>
+                <div>
+                  <p class="font-semibold">Email</p>
+                  <a href="mailto:berkay_inam@hotmail.com" class="text-gray-600 hover:text-accent">berkay_inam@hotmail.com</a>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <div class="text-accent mt-1 mr-3">
+                  <i class="fas fa-phone text-xl"></i>
+                </div>
+                <div>
+                  <p class="font-semibold">Telefon</p>
+                  <a href="tel:+905541556767" class="text-gray-600 hover:text-accent">+90 554 155 6767</a>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <div class="text-accent mt-1 mr-3">
+                  <i class="fas fa-map-marker-alt text-xl"></i>
+                </div>
+                <div>
+                  <p class="font-semibold">Lokasyon</p>
+                  <p class="text-gray-600">İstanbul, Türkiye</p>
+                </div>
+              </li>
+            </ul>
+            
+            <div class="mt-8">
+              <h4 class="font-semibold mb-3">Sosyal Medya</h4>
+              <div class="flex space-x-4">
+                <a href="https://github.com/berkayinam" target="_blank" class="text-gray-600 hover:text-accent transition-colors">
+                  <i class="fab fa-github text-2xl"></i>
+                </a>
+                <a href="https://medium.com/@berkayinam" target="_blank" class="text-gray-600 hover:text-accent transition-colors">
+                  <i class="fab fa-medium text-2xl"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/berkay-inam-b16b391ba/" target="_blank" class="text-gray-600 hover:text-accent transition-colors">
+                  <i class="fab fa-linkedin text-2xl"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card p-6">
+            <h3 class="text-2xl font-bold mb-4">Mesaj Gönder</h3>
+            <form id="contact-form" class="space-y-4">
+              <div>
+                <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">İsim</label>
+                <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-md focus:ring-accent focus:border-accent dark:focus:ring-gray-500 dark:focus:border-gray-500">
+              </div>
+              <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-md focus:ring-accent focus:border-accent dark:focus:ring-gray-500 dark:focus:border-gray-500">
+              </div>
+              <div>
+                <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Mesaj</label>
+                <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-md focus:ring-accent focus:border-accent dark:focus:ring-gray-500 dark:focus:border-gray-500"></textarea>
+              </div>
+              <button type="submit" class="btn-primary">
+                <i class="fas fa-paper-plane mr-2"></i> Gönder
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-primary text-white py-8 dark:bg-black transition-colors duration-200">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-4 md:mb-0">
+          <p class="text-xl font-bold">Berkay İnam</p>
+          <p class="text-gray-400">DevOps Engineer</p>
+        </div>
+        <div>
+          <p>&copy; 2024 Berkay İnam. Tüm hakları saklıdır.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html> 
