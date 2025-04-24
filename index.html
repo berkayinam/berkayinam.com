@@ -8,7 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <link rel="stylesheet" href="/src/style.css">
+  <script type="module" src="/assets/js/main.js"></script>
+  <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body x-data="{ mobileMenuOpen: false, activeTab: 'all' }">
   <!-- Header/Navbar -->
@@ -83,10 +84,10 @@
           </h1>
           <p class="text-xl md:text-2xl text-gray-100 mb-8">DevOps Engineer & Backend Developer</p>
           <div class="flex space-x-4">
-            <a href="https://github.com/berkayinam" target="_blank" class="btn-secondary">
+            <a href="https://github.com/berkayinam" target="_blank" class="btn-primary">
               <i class="fab fa-github mr-2"></i> GitHub
             </a>
-            <a href="https://medium.com/@berkayinam" target="_blank" class="btn-outline">
+            <a href="https://medium.com/@berkayinam" target="_blank" class="btn-primary">
               <i class="fab fa-medium mr-2"></i> Medium
             </a>
             <a href="https://www.linkedin.com/in/berkay-inam-b16b391ba/" target="_blank" class="btn-primary">
@@ -109,10 +110,10 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="section-title">Hakkımda</h2>
       <div class="max-w-3xl mx-auto text-lg text-gray-600 space-y-4">
-        <p>24 yaşında, İstanbul/Türkiye'de yaşayan tutkulu bir DevOps Mühendisi ve Go Backend API geliştiricisiyim. 🇹🇷</p>
+        <p>İstanbul/Türkiye'de yaşayan tutkulu bir DevOps Mühendisiyim 🇹🇷</p>
         <p>Yazılım hayatıma 2017 yılında Lise'de başladım. Birçok alanda yazılım deneyip tecrübe edindikten sonra DevOps alanında derinleşmeye karar verdim. Linux sistemler, container teknolojileri ve otomasyon süreçlerine karşı özel bir ilgi duyuyorum.</p>
         <p>İlgimi çeken süreçler Container Orchestration ve sanallaştırma teknolojileri, CI/CD Pipelines, Configuration management ve Bug tracking araçları, test otomasyonu ve analizi.</p>
-        <p class="font-semibold italic">"Deneme.txt bile olsa otomasyona bağlarım - otomasyon benim hayatım 💙"</p>
+        <p class="font-semibold italic">"Deneme.txt bile olsa otomasyona bağlarım. Otomasyon benim 💙"</p>
       </div>
     </div>
   </section>
@@ -243,25 +244,20 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="section-title">İş Deneyimi</h2>
       
-      <div class="max-w-4xl mx-auto space-y-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
         <!-- Experience Item 1 -->
         <div class="card p-6">
-          <div class="flex flex-col md:flex-row md:items-start">
-            <div class="mb-4 md:mb-0 md:mr-6">
-              <div class="bg-accent text-white w-16 h-16 rounded-full flex items-center justify-center">
+          <div class="flex flex-col items-center">
+            <div class="mb-4">
+              <div class="bg-theme-primary text-white w-16 h-16 rounded-full flex items-center justify-center">
                 <i class="fas fa-briefcase text-2xl"></i>
               </div>
             </div>
-            <div>
+            <div class="text-center">
               <h3 class="text-xl font-bold mb-1">Fortech Bilişim Sistem Yöneticisi & Danışmanı</h3>
-              <p class="text-gray-500 mb-3">Kasım 2024 - Devam Ediyor</p>
-              <p class="text-gray-700 mb-4">
-                Kasa (NCR), ofis bilgisayarı ve POS sorunları gibi hatalar için Gratis tarafından
-                kodlanan Gratis-4Me platformu üzerinden uzaktan erişim ile Gratis personeline çözüm desteği
-                sağlıyorum. Yardım masası taleplerinin oluşturulması ve ekiplere yönlendirilmesi, yönetilmesi ve
-                çözümlenmesinden sorumluyum. Active directory ile bilgisayar kullanıcı şifre yönetimini
-                sağlıyorum. VNC viewer ile uzak masaüstü bağlantısı kullanarak anlık bilgisayar problemlerini
-                çözüyorum.
+              <p class="text-gray-500 dark:text-gray-400 mb-3">Kasım 2024 - Devam Ediyor</p>
+              <p class="text-gray-700 dark:text-gray-300 mb-4">
+                Kasa (NCR), ofis bilgisayarı ve POS sorunları için Gratis-4Me platformu üzerinden uzaktan destek sağlıyorum. Yardım masası taleplerinin yönetimi ve çözümlenmesi, Active Directory yönetimi ve VNC ile uzak masaüstü desteği veriyorum.
               </p>
             </div>
           </div>
@@ -269,22 +265,17 @@
         
         <!-- Experience Item 2 -->
         <div class="card p-6">
-          <div class="flex flex-col md:flex-row md:items-start">
-            <div class="mb-4 md:mb-0 md:mr-6">
-              <div class="bg-accent text-white w-16 h-16 rounded-full flex items-center justify-center">
+          <div class="flex flex-col items-center">
+            <div class="mb-4">
+              <div class="bg-theme-primary text-white w-16 h-16 rounded-full flex items-center justify-center">
                 <i class="fas fa-code-branch text-2xl"></i>
               </div>
             </div>
-            <div>
+            <div class="text-center">
               <h3 class="text-xl font-bold mb-1">Turkcell IT & NT Otomasyon Çözümleri</h3>
-              <p class="text-gray-500 mb-3">2024 - 4 ay staj</p>
-              <p class="text-gray-700 mb-4">
-                Stajıma ekipte DevOps sorumlusu olarak başladım. Kubernetes ve Docker eğitimleri aldım. 
-                Openshift platformunda altyapı mimarisi üzerine çalıştım. "Erişim Sağlama Sistemi" adında 
-                lokal olarak monolitik çalışan bir Turkcell projesinin servis odaklı olarak Openshift ortamına 
-                taşınması ve altyapısının hazırlanmasında görev aldım. Dağıtım konfigürasyonları ve PVC'ler arasındaki 
-                iletişim ile ilgili süreçlerde yer aldım. Bulut Teknolojileri ve DevOps Teknolojileri üzerine 2 büyük 
-                sunum yaptım.
+              <p class="text-gray-500 dark:text-gray-400 mb-3">2024 - 4 ay staj</p>
+              <p class="text-gray-700 dark:text-gray-300 mb-4">
+                DevOps sorumlusu olarak Kubernetes, Docker ve Openshift üzerinde çalıştım. "Erişim Sağlama Sistemi" projesinin mikroservis mimarisine geçişinde görev aldım. Bulut ve DevOps teknolojileri üzerine sunumlar gerçekleştirdim.
               </p>
             </div>
           </div>
@@ -580,6 +571,5 @@
   </footer>
 
   <!-- JavaScript -->
-  <script type="module" src="/src/main.js"></script>
 </body>
 </html> 

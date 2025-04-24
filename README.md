@@ -55,9 +55,9 @@ Web sitesi http://45.9.30.161:9999 adresinde çalışacaktır.
 ## Proje Yapısı
 
 ```
-├── src/                  # Kaynak kodları
-│   ├── style.css         # Tailwind CSS ile stil dosyası
-│   └── main.js           # Ana JavaScript dosyası
+├── assets/               # Kaynak kodları
+│   ├── css/              # Tailwind CSS ile stil dosyası
+│   └── js/               # Ana JavaScript dosyası
 ├── public/               # Statik dosyalar
 ├── index.html            # Ana HTML dosyası
 ├── vite.config.js        # Vite yapılandırması
