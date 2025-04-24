@@ -12,6 +12,13 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold text-theme-dark dark:text-white;
   }
+  /* Standardize dark mode text colors */
+  .dark p, .dark span, .dark a, .dark li {
+    @apply text-gray-100 !important;
+  }
+  .dark .text-gray-400, .dark .text-gray-500, .dark .text-gray-600, .dark .text-gray-700 {
+    @apply text-gray-100 !important;
+  }
 }
 
 @layer components {
@@ -34,7 +41,7 @@
     @apply inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-theme-primary bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-theme-primary transition-colors duration-200 dark:bg-dark-secondary dark:text-white dark:hover:bg-gray-800;
   }
   .card {
-    @apply bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 dark:bg-dark-secondary dark:shadow-black dark:text-white;
+    @apply bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 dark:bg-dark-secondary dark:shadow-black dark:text-gray-100;
   }
   .uniform-section {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
