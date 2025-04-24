@@ -5,6 +5,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize dark mode from local storage or system preference
   initTheme();
   
+  // Ensure mobile menu is closed by default
+  if (window.Alpine) {
+    document.querySelectorAll('[x-data]').forEach(el => {
+      if (el.__x && el.__x.$data && 'mobileMenuOpen' in el.__x.$data) {
+        el.__x.$data.mobileMenuOpen = false;
+      }
+    });
+  }
+  
   // Fetch GitHub projects
   fetchGitHubProjects();
   
