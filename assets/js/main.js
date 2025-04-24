@@ -10,9 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Fetch Medium articles
   fetchMediumPosts();
-  
-  // Create signature image
-  createSignatureImage();
+
 
   // Handle contact form submission
   const contactForm = document.getElementById('contact-form');
@@ -342,57 +340,3 @@ function fetchSampleMediumPosts(container) {
     container.appendChild(postElement);
   });
 }
-
-// Create a custom signature image in the contact form
-function createSignatureImage() {
-  const canvas = document.createElement('canvas');
-  canvas.width = 60;
-  canvas.height = 30;
-  const ctx = canvas.getContext('2d');
-  
-  // Clear canvas
-  ctx.fillStyle = '#ffffff';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  
-  // Draw AI pattern
-  ctx.fillStyle = '#2563eb'; // theme-primary color
-  
-  // Draw a stylized "AI" pattern
-  // Letter A
-  ctx.beginPath();
-  ctx.moveTo(10, 25);
-  ctx.lineTo(20, 5);
-  ctx.lineTo(30, 25);
-  ctx.stroke();
-  
-  // Cross bar for A
-  ctx.beginPath();
-  ctx.moveTo(15, 15);
-  ctx.lineTo(25, 15);
-  ctx.stroke();
-  
-  // Letter I 
-  ctx.fillRect(35, 5, 5, 20);
-  
-  // Dots representing assistant
-  ctx.beginPath();
-  ctx.arc(50, 10, 2, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.beginPath();
-  ctx.arc(50, 20, 2, 0, Math.PI * 2); 
-  ctx.fill();
-  
-  // Create image from canvas
-  const signatureImg = document.createElement('img');
-  signatureImg.src = canvas.toDataURL('image/png');
-  signatureImg.alt = 'AI Assistant Signature';
-  signatureImg.className = 'inline-block ml-2 -mt-1';
-  signatureImg.style.width = '30px';
-  signatureImg.style.height = '15px';
-  
-  // Add image to submit button
-  const submitBtn = document.querySelector('button[type="submit"]');
-  if (submitBtn) {
-    submitBtn.appendChild(signatureImg);
-  }
-} 
