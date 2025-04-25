@@ -10,6 +10,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
   }
   body {
     @apply bg-white text-gray-800 dark:bg-black dark:text-white transition-colors duration-200;
@@ -24,26 +25,36 @@
   .dark .text-gray-400, .dark .text-gray-500, .dark .text-gray-600, .dark .text-gray-700 {
     @apply text-gray-100 !important;
   }
+  /* Improved focus styles for keyboard navigation */
+  a:focus, button:focus, input:focus, textarea:focus, select:focus {
+    @apply outline-none ring-2 ring-theme-primary ring-offset-2 ring-offset-white dark:ring-offset-black;
+  }
+  /* Smooth scrolling to section links */
+  @media (prefers-reduced-motion: no-preference) {
+    :target {
+      scroll-margin-top: 5rem;
+    }
+  }
 }
 
 @layer components {
   .section {
-    @apply py-16;
+    @apply py-12 sm:py-16;
   }
   .section-title {
-    @apply text-3xl md:text-4xl font-bold mb-12 text-center text-theme-primary dark:text-white;
+    @apply text-2xl sm:text-3xl md:text-4xl font-bold mb-8 sm:mb-12 text-center text-theme-primary dark:text-white;
   }
   .logo-text {
     @apply text-theme-primary dark:text-white;
   }
   .btn-primary {
-    @apply inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-theme-primary hover:bg-theme-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-theme-primary transition-colors duration-200 dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-gray-600;
+    @apply inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-theme-primary hover:bg-theme-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-theme-primary transition-colors duration-200 dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-gray-600;
   }
   .btn-outline {
-    @apply inline-flex items-center px-4 py-2 border border-2 border-theme-primary rounded-md shadow-sm text-sm font-medium text-theme-primary bg-transparent hover:bg-theme-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-theme-primary transition-colors duration-200 dark:border-white dark:text-white dark:hover:bg-gray-800;
+    @apply inline-flex items-center justify-center px-4 py-2 border border-2 border-theme-primary rounded-md shadow-sm text-sm font-medium text-theme-primary bg-transparent hover:bg-theme-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-theme-primary transition-colors duration-200 dark:border-white dark:text-white dark:hover:bg-gray-800;
   }
   .btn-secondary {
-    @apply inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-theme-primary bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-theme-primary transition-colors duration-200 dark:bg-dark-secondary dark:text-white dark:hover:bg-gray-800;
+    @apply inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-theme-primary bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-theme-primary transition-colors duration-200 dark:bg-dark-secondary dark:text-white dark:hover:bg-gray-800;
   }
   .card {
     @apply bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 dark:bg-dark-secondary dark:shadow-black dark:text-gray-100;
@@ -51,4 +62,52 @@
   .uniform-section {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
+  
+  /* Mobile friendly touch targets */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+  
+  /* Responsive navigation tweaks */
+  .mobile-menu-link {
+    @apply block w-full py-3 px-4 text-left rounded-md transition-colors hover:bg-gray-100 dark:hover:bg-gray-800;
+  }
+  
+  /* Improved form inputs for touch */
+  .form-input {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-theme-primary focus:border-theme-primary transition-colors;
+  }
+} 
+
+/* Media query for very small devices */
+@media (max-width: 360px) {
+  .btn-primary, .btn-outline, .btn-secondary {
+    @apply w-full justify-center my-1;
+  }
+  
+  .section {
+    @apply py-8;
+  }
+  
+  .card {
+    @apply p-4;
+  }
+}
+
+/* Add smooth scrolling animation */
+html {
+  scroll-padding-top: 5rem;
+}
+
+/* Improve accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 } 

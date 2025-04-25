@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize dark mode from local storage or system preference
   initTheme();
   
+  // Initialize typewriter effect
+  initTypewriter();
+  
   // Ensure mobile menu is closed by default
   if (window.Alpine) {
     document.querySelectorAll('[x-data]').forEach(el => {
@@ -98,6 +101,68 @@ function updateThemeIcons(isDark) {
   }
 }
 
+// Initialize typewriter effect
+function initTypewriter() {
+  const typewriterElement = document.getElementById('typewriter');
+  if (!typewriterElement) return;
+
+  const titles = [
+    'Berkay İnam',
+    'DevOps Engineer', 
+    'Linux System Administrator',
+    'Container Specialist',
+    'CI/CD Expert',
+    'Automation Engineer',
+    'Infrastructure Developer',
+    'Tech Enthusiast',
+    'Problem Solver',
+    'Cloud Engineer',
+  ];
+
+  let currentTitleIndex = 0;
+  let currentCharIndex = 0;
+  let isDeleting = false;
+  let typingSpeed = 100; // Base typing speed
+  let deletingSpeed = 50; // Base deleting speed
+  let pauseBeforeDelete = 1000; // Pause before starting to delete
+  let pauseBeforeNextWord = 200; // Pause before typing next word
+
+  function type() {
+    const currentTitle = titles[currentTitleIndex];
+    
+    if (isDeleting) {
+      // Deleting text
+      currentCharIndex--;
+      typingSpeed = deletingSpeed;
+    } else {
+      // Typing text
+      currentCharIndex++;
+      typingSpeed = 100;
+    }
+
+    // Update the text
+    typewriterElement.textContent = currentTitle.substring(0, currentCharIndex);
+
+    // If we've finished typing the word
+    if (!isDeleting && currentCharIndex === currentTitle.length) {
+      typingSpeed = pauseBeforeDelete;
+      isDeleting = true;
+    }
+
+    // If we've finished deleting the word
+    if (isDeleting && currentCharIndex === 0) {
+      isDeleting = false;
+      currentTitleIndex = (currentTitleIndex + 1) % titles.length;
+      typingSpeed = pauseBeforeNextWord;
+    }
+
+    setTimeout(type, typingSpeed);
+  }
+
+  // Start the typewriter effect
+  type();
+}
+
 // Fetch GitHub projects
 async function fetchGitHubProjects() {
   const username = 'berkayinam';
@@ -106,8 +171,40 @@ async function fetchGitHubProjects() {
   if (!projectsContainer) return;
   
   try {
-    const response = await axios.get(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6`);
-    const projects = response.data;
+    // GraphQL query to get pinned repositories
+    const response = await axios.post('https://api.github.com/graphql', {
+      query: `{
+        user(login: "${username}") {
+          pinnedItems(first: 6, types: REPOSITORY) {
+            nodes {
+              ... on Repository {
+                name
+                description
+                url
+                languages(first: 1) {
+                  nodes {
+                    name
+                  }
+                }
+                repositoryTopics(first: 10) {
+                  nodes {
+                    topic {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }`
+    }, {
+      headers: {
+        'Authorization': `bearer ${process.env.GITHUB_TOKEN}`
+      }
+    });
+
+    const projects = response.data.data.user.pinnedItems.nodes;
     
     // Clear loading placeholders
     projectsContainer.innerHTML = '';
@@ -118,115 +215,85 @@ async function fetchGitHubProjects() {
     }
     
     // Add projects to the container
-    projects.forEach(project => {
-      const tags = [];
-      
-      // Determine category tags based on topics or other properties
-      if (project.topics && project.topics.includes('devops')) {
-        tags.push('devops');
-      }
-      
-      if (project.topics && (project.topics.includes('programming') || project.language)) {
-        tags.push('programming');
-      }
-      
-      if (project.name.includes('42-') || project.name.toLowerCase().includes('ft_')) {
-        tags.push('42');
-      }
-      
-      // If no tags are assigned, mark as 'other'
-      if (tags.length === 0) {
-        tags.push('other');
-      }
-      
-      // Always include 'all' tag
-      tags.push('all');
-      
-      const projectElement = document.createElement('div');
-      projectElement.className = 'card';
-      projectElement.dataset.tags = tags.join(' ');
-      
-      const imageUrl = `https://via.placeholder.com/600x400?text=${encodeURIComponent(project.name)}`;
-      
-      projectElement.innerHTML = `
-        <div class="h-48 bg-gray-100 dark:bg-gray-800 overflow-hidden">
-          <img src="${imageUrl}" alt="${project.name}" class="w-full h-full object-cover">
-        </div>
-        <div class="p-4">
-          <h3 class="text-xl font-bold mb-2 dark:text-white">${project.name}</h3>
-          <p class="text-gray-600 dark:text-gray-300 mb-3">${project.description || 'No description available.'}</p>
-          <div class="flex flex-wrap gap-2 mb-4">
-            ${project.language ? `<span class="px-2 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 text-xs rounded">${project.language}</span>` : ''}
-            ${project.topics ? project.topics.map(topic => `<span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs rounded">${topic}</span>`).join('') : ''}
+    for (const project of projects) {
+      try {
+        const projectElement = document.createElement('div');
+        projectElement.className = 'card';
+        
+        const language = project.languages.nodes[0]?.name || '';
+        const topics = project.repositoryTopics.nodes.map(node => node.topic.name);
+        
+        projectElement.innerHTML = `
+          <div class="h-48 bg-gray-100 dark:bg-gray-800 overflow-hidden">
+            <img src="https://opengraph.githubassets.com/1/${username}/${project.name}" alt="${project.name}" class="w-full h-full object-cover">
           </div>
-          <a href="${project.html_url}" target="_blank" class="btn inline-block">
-            <i class="fab fa-github mr-2"></i> View Project
-          </a>
-        </div>
-      `;
-      
-      projectsContainer.appendChild(projectElement);
-    });
-    
-    // Set up filtering
-    setupFilterHandlers();
+          <div class="p-4">
+            <h3 class="text-xl font-bold mb-2 dark:text-white">${project.name}</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-3">${project.description || 'No description available.'}</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              ${language ? `<span class="px-2 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 text-xs rounded">${language}</span>` : ''}
+              ${topics.map(topic => `<span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs rounded">${topic}</span>`).join('')}
+            </div>
+            <a href="${project.url}" target="_blank" class="btn inline-block">
+              <i class="fab fa-github mr-2"></i> View Project
+            </a>
+          </div>
+        `;
+        
+        projectsContainer.appendChild(projectElement);
+      } catch (error) {
+        console.error(`Error creating project element for ${project.name}:`, error);
+      }
+    }
     
   } catch (error) {
     console.error('Error fetching GitHub projects:', error);
-    projectsContainer.innerHTML = '<p class="col-span-full text-center text-red-500">Error loading projects. Please try again later.</p>';
-  }
-}
-
-// Set up project filter handlers
-function setupFilterHandlers() {
-  const allProjects = document.querySelectorAll('#projects-container .card');
-  
-  // Add event listener for Alpine.js data changes
-  document.addEventListener('alpine:init', () => {
-    Alpine.data('projectFilter', () => ({
-      activeTab: 'all',
-      filterProjects() {
-        allProjects.forEach(project => {
-          const tags = project.dataset.tags.split(' ');
-          if (this.activeTab === 'all' || tags.includes(this.activeTab)) {
-            project.classList.remove('hidden');
-          } else {
-            project.classList.add('hidden');
-          }
-        });
+    // Fallback to REST API if GraphQL fails
+    try {
+      const response = await axios.get(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6`);
+      const projects = response.data;
+      
+      // Clear loading placeholders
+      projectsContainer.innerHTML = '';
+      
+      if (projects.length === 0) {
+        projectsContainer.innerHTML = '<p class="col-span-full text-center text-gray-500 dark:text-gray-400">No projects found.</p>';
+        return;
       }
-    }));
-  });
-  
-  // Filter projects when tab buttons are clicked
-  document.querySelectorAll('[x-data]').forEach(el => {
-    if (el.getAttribute('x-data').includes('activeTab')) {
-      // Initialize Alpine.js with event watcher
-      el.__x = new Proxy({activeTab: 'all'}, {
-        set(target, key, value) {
-          target[key] = value;
-          if (key === 'activeTab') {
-            filterProjectsByTag(value);
-          }
-          return true;
+      
+      // Add projects to the container
+      for (const project of projects) {
+        try {
+          const projectElement = document.createElement('div');
+          projectElement.className = 'card';
+          
+          projectElement.innerHTML = `
+            <div class="h-48 bg-gray-100 dark:bg-gray-800 overflow-hidden">
+              <img src="https://opengraph.githubassets.com/1/${username}/${project.name}" alt="${project.name}" class="w-full h-full object-cover">
+            </div>
+            <div class="p-4">
+              <h3 class="text-xl font-bold mb-2 dark:text-white">${project.name}</h3>
+              <p class="text-gray-600 dark:text-gray-300 mb-3">${project.description || 'No description available.'}</p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                ${project.language ? `<span class="px-2 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 text-xs rounded">${project.language}</span>` : ''}
+                ${project.topics ? project.topics.map(topic => `<span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs rounded">${topic}</span>`).join('') : ''}
+              </div>
+              <a href="${project.html_url}" target="_blank" class="btn inline-block">
+                <i class="fab fa-github mr-2"></i> View Project
+              </a>
+            </div>
+          `;
+          
+          projectsContainer.appendChild(projectElement);
+        } catch (error) {
+          console.error(`Error creating project element for ${project.name}:`, error);
         }
-      });
+      }
+    } catch (fallbackError) {
+      console.error('Error fetching GitHub projects (fallback):', fallbackError);
+      projectsContainer.innerHTML = '<p class="col-span-full text-center text-red-500">Error loading projects. Please try again later.</p>';
     }
-  });
-}
-
-// Filter projects by tag
-function filterProjectsByTag(tag) {
-  const allProjects = document.querySelectorAll('#projects-container .card');
-  
-  allProjects.forEach(project => {
-    const tags = project.dataset.tags ? project.dataset.tags.split(' ') : [];
-    if (tag === 'all' || tags.includes(tag)) {
-      project.style.display = '';
-    } else {
-      project.style.display = 'none';
-    }
-  });
+  }
 }
 
 // Fetch Medium posts
@@ -247,7 +314,8 @@ async function fetchMediumPosts() {
       throw new Error('Could not fetch Medium posts');
     }
     
-    const posts = response.data.items;
+    // Limit to 6 posts
+    const posts = response.data.items.slice(0, 6);
     
     // Clear loading placeholders
     mediumPostsContainer.innerHTML = '';
@@ -322,7 +390,7 @@ function fetchSampleMediumPosts(container) {
       thumbnail: "https://via.placeholder.com/600x400?text=Cloud+Tarihcesi",
       description: "1963'ten itibaren cloud ve bilgisayar teknolojilerinin doğuşuna bakacağız. 2024'e kadar Bilgisayar bilimi ve cloud yolcusuyuz."
     }
-  ];
+  ].slice(0, 6); // Ensure we only show up to 6 sample posts
   
   // Clear loading placeholders
   container.innerHTML = '';

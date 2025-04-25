@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Berkay İnam | DevOps Engineer</title>
+  <title>Berkay Inam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <script type="module" crossorigin src="/assets/main-Bw0V6Bi8.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/main-BaNtkUlT.css">
+  <script type="module" crossorigin src="/assets/main-ZN0M49Dg.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-AjiE5MO6.css">
 </head>
-<body x-data="{ activeTab: 'all' }">
+<body>
   <!-- Header/Navbar -->
   <header class="bg-white shadow-sm sticky top-0 z-50 dark:bg-black transition-colors duration-200" x-data="{ mobileMenuOpen: false }">
     <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
       <div class="flex justify-between items-center">
-        <a href="#" class="text-2xl font-bold logo-text">Berkay <span class="text-theme-dark dark:text-white">İnam</span></a>
+        <a href="#" class="text-2xl font-bold logo-text">Berkay <span class="dark:text-white">İnam</span></a>
         
         <!-- Desktop Menu -->
         <div class="hidden md:flex space-x-8">
@@ -55,18 +55,32 @@
         x-transition:leave="transition ease-in duration-150"
         x-transition:leave-start="opacity-100 translate-y-0"
         x-transition:leave-end="opacity-0 -translate-y-4"
-        class="md:hidden mt-4 space-y-2 py-2"
+        class="md:hidden mt-4 space-y-1 py-2 bg-white dark:bg-gray-900 rounded-lg shadow-lg"
       >
-        <a href="#about" @click="mobileMenuOpen = false" class="block py-2 text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">Hakkımda</a>
-        <a href="#skills" @click="mobileMenuOpen = false" class="block py-2 text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">Yetenekler</a>
-        <a href="#experience" @click="mobileMenuOpen = false" class="block py-2 text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">Deneyim</a>
-        <a href="#projects" @click="mobileMenuOpen = false" class="block py-2 text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">Projeler</a>
-        <a href="#gallery" @click="mobileMenuOpen = false" class="block py-2 text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">Galeri</a>
-        <a href="#blog" @click="mobileMenuOpen = false" class="block py-2 text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">Blog</a>
-        <a href="#contact" @click="mobileMenuOpen = false" class="block py-2 text-gray-600 hover:text-theme-primary transition-colors dark:text-gray-300">İletişim</a>
-        <div class="py-2 flex items-center">
-          <span class="text-gray-600 dark:text-gray-300 mr-3">Tema</span>
-          <button id="mobile-theme-toggle" class="text-gray-600 dark:text-gray-300 hover:text-theme-primary dark:hover:text-theme-primary focus:outline-none" @click="mobileMenuOpen = false">
+        <a href="#about" @click="mobileMenuOpen = false" class="mobile-menu-link">
+          <i class="fas fa-user-circle mr-2"></i> Hakkımda
+        </a>
+        <a href="#skills" @click="mobileMenuOpen = false" class="mobile-menu-link">
+          <i class="fas fa-tools mr-2"></i> Yetenekler
+        </a>
+        <a href="#experience" @click="mobileMenuOpen = false" class="mobile-menu-link">
+          <i class="fas fa-briefcase mr-2"></i> Deneyim
+        </a>
+        <a href="#projects" @click="mobileMenuOpen = false" class="mobile-menu-link">
+          <i class="fas fa-code-branch mr-2"></i> Projeler
+        </a>
+        <a href="#gallery" @click="mobileMenuOpen = false" class="mobile-menu-link">
+          <i class="fas fa-images mr-2"></i> Galeri
+        </a>
+        <a href="#blog" @click="mobileMenuOpen = false" class="mobile-menu-link">
+          <i class="fas fa-blog mr-2"></i> Blog
+        </a>
+        <a href="#contact" @click="mobileMenuOpen = false" class="mobile-menu-link">
+          <i class="fas fa-envelope mr-2"></i> İletişim
+        </a>
+        <div class="px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-700 mt-2">
+          <span class="text-gray-600 dark:text-gray-300">Tema</span>
+          <button id="mobile-theme-toggle" class="touch-target p-2 text-gray-600 dark:text-gray-300 hover:text-theme-primary dark:hover:text-theme-primary focus:outline-none rounded-full bg-gray-100 dark:bg-gray-800" @click="mobileMenuOpen = false">
             <i class="fas fa-moon text-xl"></i>
             <i class="fas fa-sun text-xl hidden"></i>
           </button>
@@ -76,30 +90,31 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="bg-gradient-to-r from-theme-primary to-theme-secondary text-white py-20 dark:bg-gradient-to-r dark:from-gray-900 dark:to-black">
+  <section class="bg-gradient-to-r from-theme-primary to-theme-secondary text-white py-8 sm:py-12 md:py-16 dark:bg-gradient-to-r dark:from-gray-900 dark:to-black">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row md:items-center">
-        <div class="md:w-1/2 mb-8 md:mb-0">
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white">
-            Merhaba, Ben <span class="text-white">Berkay İnam</span>
+        <div class="md:w-1/2 mb-8 md:mb-0 text-center md:text-left">
+          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white">
+            Merhaba, Ben
+            <div class="mt-2">
+              <span id="typewriter" class="text-white"></span>
+            </div>
           </h1>
-          <p class="text-xl md:text-2xl text-gray-100 mb-8">DevOps Engineer & Backend Developer</p>
-          <div class="flex space-x-4">
-            <a href="https://github.com/berkayinam" target="_blank" class="btn-primary">
+          <div class="flex flex-wrap justify-center md:justify-start gap-3 sm:gap-4 mt-8">
+            <a href="https://github.com/berkayinam" target="_blank" rel="noopener noreferrer" class="btn-primary min-w-[120px] text-center">
               <i class="fab fa-github mr-2"></i> GitHub
             </a>
-            <a href="https://medium.com/@berkayinam" target="_blank" class="btn-primary">
+            <a href="https://medium.com/@berkayinam" target="_blank" rel="noopener noreferrer" class="btn-primary min-w-[120px] text-center">
               <i class="fab fa-medium mr-2"></i> Medium
             </a>
-            <a href="https://www.linkedin.com/in/berkay-inam-b16b391ba/" target="_blank" class="btn-primary">
+            <a href="https://www.linkedin.com/in/berkay-inam-b16b391ba/" target="_blank" rel="noopener noreferrer" class="btn-primary min-w-[120px] text-center">
               <i class="fab fa-linkedin mr-2"></i> LinkedIn
             </a>
           </div>
         </div>
         <div class="md:w-1/2 flex justify-center">
-          <div class="w-64 h-64 rounded-full bg-white/20 border-4 border-white overflow-hidden shadow-lg dark:bg-gray-800/20 dark:border-gray-700">
-            <!-- Replace with your profile image -->
-            <img src="../assets/img/pp.png" alt="Berkay İnam" class="w-full h-full object-cover">
+          <div class="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-full bg-white/20 border-4 border-white overflow-hidden shadow-lg dark:bg-gray-800/20 dark:border-gray-700">
+            <img src="/assets/pp-CwH8Qo-6.png" alt="Berkay İnam" class="w-full h-full object-cover">
           </div>
         </div>
       </div>
@@ -108,13 +123,13 @@
 
   <!-- About Section -->
   <section id="about" class="section bg-gray-50 dark:bg-dark-primary">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="container mx-auto sm:px-6 lg:px-8">
       <h2 class="section-title">Hakkımda</h2>
-      <div class="max-w-3xl mx-auto text-lg text-gray-600 space-y-4">
+      <div class="max-w-9xl mx-auto text-lg text-gray-600 space-y-4 sm:px-6 lg:px-8">
         <p>İstanbul/Türkiye'de yaşayan tutkulu bir DevOps Mühendisiyim 🇹🇷</p>
         <p>Yazılım hayatıma 2017 yılında Lise'de başladım. Birçok alanda yazılım deneyip tecrübe edindikten sonra DevOps alanında derinleşmeye karar verdim. Linux sistemler, container teknolojileri ve otomasyon süreçlerine karşı özel bir ilgi duyuyorum.</p>
         <p>İlgimi çeken süreçler Container Orchestration ve sanallaştırma teknolojileri, CI/CD Pipelines, Configuration management ve Bug tracking araçları, test otomasyonu ve analizi.</p>
-        <p class="font-semibold italic">"Deneme.txt bile olsa otomasyona bağlarım. Otomasyon benim 💙"</p>
+        <p class="italic">"Deneme.txt bile olsa otomasyona bağlarım. Otomasyon benim 💙"</p>
       </div>
     </div>
   </section>
@@ -312,41 +327,8 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="section-title">Projeler</h2>
       
-      <div class="flex justify-center mb-8">
-        <div class="inline-flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
-          <button 
-            @click="activeTab = 'all'" 
-            :class="{'bg-white dark:bg-gray-700 shadow-md': activeTab === 'all', 'hover:bg-white/60 dark:hover:bg-gray-700/60': activeTab !== 'all'}"
-            class="px-4 py-2 rounded-md text-sm font-medium transition-all dark:text-white"
-          >
-            Tümü
-          </button>
-          <button 
-            @click="activeTab = 'devops'" 
-            :class="{'bg-white dark:bg-gray-700 shadow-md': activeTab === 'devops', 'hover:bg-white/60 dark:hover:bg-gray-700/60': activeTab !== 'devops'}"
-            class="px-4 py-2 rounded-md text-sm font-medium transition-all dark:text-white"
-          >
-            DevOps
-          </button>
-          <button 
-            @click="activeTab = 'programming'" 
-            :class="{'bg-white dark:bg-gray-700 shadow-md': activeTab === 'programming', 'hover:bg-white/60 dark:hover:bg-gray-700/60': activeTab !== 'programming'}"
-            class="px-4 py-2 rounded-md text-sm font-medium transition-all dark:text-white"
-          >
-            Programlama
-          </button>
-          <button 
-            @click="activeTab = '42'" 
-            :class="{'bg-white dark:bg-gray-700 shadow-md': activeTab === '42', 'hover:bg-white/60 dark:hover:bg-gray-700/60': activeTab !== '42'}"
-            class="px-4 py-2 rounded-md text-sm font-medium transition-all dark:text-white"
-          >
-            42 Projeleri
-          </button>
-        </div>
-      </div>
-      
       <!-- Projects Grid - Will be dynamically populated with GitHub projects -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-container">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-container">
         <!-- Projects will be loaded from GitHub API -->
         <div class="card animate-pulse">
           <div class="bg-gray-300 h-48 w-full"></div>
@@ -375,6 +357,13 @@
             <div class="h-4 bg-gray-300 rounded w-4/6"></div>
           </div>
         </div>
+      </div>
+      
+      <!-- View More Projects Button -->
+      <div class="mt-8">
+        <a href="https://github.com/berkayinam" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 underline text-sm inline-flex items-center">
+          <i class="fab fa-github mr-2"></i> daha fazla proje için...
+        </a>
       </div>
     </div>
   </section>
@@ -473,6 +462,11 @@
           </div>
         </div>
       </div>
+      <div class="mt-8">
+        <a href="https://medium.com/@berkayinam" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 underline text-sm inline-flex items-center">
+          <i class="fab fa-medium mr-2"></i> daha fazla yazı için...
+        </a>
+      </div>
     </div>
   </section>
 
@@ -484,47 +478,47 @@
       <div class="max-w-4xl mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div class="card p-6">
-            <h3 class="text-2xl font-bold mb-4">İletişim Bilgileri</h3>
-            <ul class="space-y-4">
-              <li class="flex items-start">
-                <div class="text-accent mt-1 mr-3">
+            <h3 class="text-2xl font-bold mb-6 text-center lg:text-left">İletişim Bilgileri</h3>
+            <ul class="space-y-6">
+              <li class="flex flex-col sm:flex-row sm:items-start gap-3">
+                <div class="text-accent mx-auto sm:mx-0 sm:mt-1 sm:mr-3 mb-2 sm:mb-0 w-10 h-10 rounded-full bg-blue-100 dark:bg-gray-800 flex items-center justify-center">
                   <i class="fas fa-envelope text-xl"></i>
                 </div>
-                <div>
+                <div class="text-center sm:text-left">
                   <p class="font-semibold">Email</p>
-                  <a href="mailto:berkay_inam@hotmail.com" class="text-gray-600 hover:text-accent">berkay_inam@hotmail.com</a>
+                  <a href="mailto:berkay_inam@hotmail.com" class="text-gray-600 hover:text-accent break-all">berkay_inam@hotmail.com</a>
                 </div>
               </li>
-              <li class="flex items-start">
-                <div class="text-accent mt-1 mr-3">
+              <li class="flex flex-col sm:flex-row sm:items-start gap-3">
+                <div class="text-accent mx-auto sm:mx-0 sm:mt-1 sm:mr-3 mb-2 sm:mb-0 w-10 h-10 rounded-full bg-blue-100 dark:bg-gray-800 flex items-center justify-center">
                   <i class="fas fa-phone text-xl"></i>
                 </div>
-                <div>
+                <div class="text-center sm:text-left">
                   <p class="font-semibold">Telefon</p>
                   <a href="tel:+905541556767" class="text-gray-600 hover:text-accent">+90 554 155 6767</a>
                 </div>
               </li>
-              <li class="flex items-start">
-                <div class="text-accent mt-1 mr-3">
+              <li class="flex flex-col sm:flex-row sm:items-start gap-3">
+                <div class="text-accent mx-auto sm:mx-0 sm:mt-1 sm:mr-3 mb-2 sm:mb-0 w-10 h-10 rounded-full bg-blue-100 dark:bg-gray-800 flex items-center justify-center">
                   <i class="fas fa-map-marker-alt text-xl"></i>
                 </div>
-                <div>
+                <div class="text-center sm:text-left">
                   <p class="font-semibold">Lokasyon</p>
                   <p class="text-gray-600">İstanbul, Türkiye</p>
                 </div>
               </li>
             </ul>
             
-            <div class="mt-8">
+            <div class="mt-8 text-center sm:text-left">
               <h4 class="font-semibold mb-3">Sosyal Medya</h4>
-              <div class="flex space-x-4">
-                <a href="https://github.com/berkayinam" target="_blank" class="text-gray-600 hover:text-accent transition-colors">
+              <div class="flex justify-center sm:justify-start space-x-6">
+                <a href="https://github.com/berkayinam" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-accent transition-colors">
                   <i class="fab fa-github text-2xl"></i>
                 </a>
-                <a href="https://medium.com/@berkayinam" target="_blank" class="text-gray-600 hover:text-accent transition-colors">
+                <a href="https://medium.com/@berkayinam" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-accent transition-colors">
                   <i class="fab fa-medium text-2xl"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/berkay-inam-b16b391ba/" target="_blank" class="text-gray-600 hover:text-accent transition-colors">
+                <a href="https://www.linkedin.com/in/berkay-inam-b16b391ba/" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-accent transition-colors">
                   <i class="fab fa-linkedin text-2xl"></i>
                 </a>
               </div>
@@ -532,21 +526,21 @@
           </div>
           
           <div class="card p-6">
-            <h3 class="text-2xl font-bold mb-4">Mesaj Gönder</h3>
+            <h3 class="text-2xl font-bold mb-6 text-center lg:text-left">Mesaj Gönder</h3>
             <form id="contact-form" class="space-y-4">
               <div>
                 <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">İsim</label>
-                <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-md focus:ring-accent focus:border-accent dark:focus:ring-gray-500 dark:focus:border-gray-500">
+                <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-lg focus:ring-2 focus:ring-theme-primary focus:border-theme-primary transition-colors" required>
               </div>
               <div>
                 <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
-                <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-md focus:ring-accent focus:border-accent dark:focus:ring-gray-500 dark:focus:border-gray-500">
+                <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-lg focus:ring-2 focus:ring-theme-primary focus:border-theme-primary transition-colors" required>
               </div>
               <div>
                 <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Mesaj</label>
-                <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-md focus:ring-accent focus:border-accent dark:focus:ring-gray-500 dark:focus:border-gray-500"></textarea>
+                <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-lg focus:ring-2 focus:ring-theme-primary focus:border-theme-primary transition-colors" required></textarea>
               </div>
-              <button type="submit" class="btn-primary">
+              <button type="submit" class="w-full sm:w-auto btn-primary py-3 px-6 text-center">
                 <i class="fas fa-paper-plane mr-2"></i> Gönder
               </button>
             </form>
@@ -557,15 +551,26 @@
   </section>
 
   <!-- Footer -->
-  <footer class="bg-primary text-white py-8 dark:bg-black transition-colors duration-200">
+  <footer class="bg-gray-900 text-white py-8 dark:bg-black transition-colors duration-200">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row justify-between items-center">
-        <div class="mb-4 md:mb-0">
-          <p class="text-xl font-bold">Berkay İnam</p>
-          <p class="text-gray-400">DevOps Engineer</p>
+        <div class="mb-6 md:mb-0 text-center md:text-left">
+          <p class="text-xl font-bold text-white">Berkay İnam</p>
+          <p class="text-gray-300">DevOps Engineer</p>
         </div>
-        <div>
-          <p>&copy; 2024 Berkay İnam. Tüm hakları saklıdır.</p>
+        <div class="text-center md:text-right">
+          <div class="flex justify-center md:justify-end space-x-4 mb-4">
+            <a href="https://github.com/berkayinam" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="p-2 bg-gray-800 hover:bg-gray-700 text-gray-200 hover:text-white rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110">
+              <i class="fab fa-github text-lg"></i>
+            </a>
+            <a href="https://medium.com/@berkayinam" target="_blank" rel="noopener noreferrer" aria-label="Medium" class="p-2 bg-gray-800 hover:bg-gray-700 text-gray-200 hover:text-white rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110">
+              <i class="fab fa-medium text-lg"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/berkay-inam-b16b391ba/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="p-2 bg-gray-800 hover:bg-gray-700 text-gray-200 hover:text-white rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110">
+              <i class="fab fa-linkedin-in text-lg"></i>
+            </a>
+          </div>
+          <p class="text-gray-400 text-sm">&copy; 2024 Berkay İnam. Tüm hakları saklıdır.</p>
         </div>
       </div>
     </div>
