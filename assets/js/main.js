@@ -218,21 +218,40 @@ async function fetchGitHubProjects() {
     for (const project of projects) {
       try {
         const projectElement = document.createElement('div');
-        projectElement.className = 'card';
+        projectElement.className = 'card flex flex-col';
         
         const language = project.languages.nodes[0]?.name || '';
         const topics = project.repositoryTopics.nodes.map(node => node.topic.name);
+        
+        // Fetch language statistics
+        const languageStatsResponse = await axios.get(`https://api.github.com/repos/${username}/${project.name}/languages`);
+        const languageStats = languageStatsResponse.data;
+        
+        // Calculate total bytes
+        const totalBytes = Object.values(languageStats).reduce((a, b) => a + b, 0);
+        
+        // Create language bar HTML
+        const languageBarHtml = Object.entries(languageStats)
+          .map(([lang, bytes]) => {
+            const percentage = (bytes / totalBytes) * 100;
+            const color = getLanguageColor(lang);
+            return `<div class="h-full" style="width: ${percentage}%; background-color: ${color};" title="${lang}: ${percentage.toFixed(1)}%"></div>`;
+          })
+          .join('');
         
         projectElement.innerHTML = `
           <div class="h-48 bg-gray-100 dark:bg-gray-800 overflow-hidden">
             <img src="https://opengraph.githubassets.com/1/${username}/${project.name}" alt="${project.name}" class="w-full h-full object-cover">
           </div>
-          <div class="p-4">
+          <div class="h-1 flex overflow-hidden">
+            ${languageBarHtml}
+          </div>
+          <div class="p-4 flex flex-col flex-grow">
             <h3 class="text-xl font-bold mb-2 dark:text-white">${project.name}</h3>
-            <p class="text-gray-600 dark:text-gray-300 mb-3">${project.description || 'No description available.'}</p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              ${language ? `<span class="px-2 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 text-xs rounded">${language}</span>` : ''}
-              ${topics.map(topic => `<span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs rounded">${topic}</span>`).join('')}
+            <p class="text-gray-600 dark:text-gray-300 mb-3 flex-grow">${project.description || 'No description available.'}</p>
+            <div class="flex flex-wrap gap-2 mb-4 mt-auto">
+              ${language ? `<span class="px-2 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 text-xs rounded inline-block">${language}</span>` : ''}
+              ${topics.map(topic => `<span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs rounded inline-block">${topic}</span>`).join('')}
             </div>
             <a href="${project.url}" target="_blank" class="btn inline-block">
               <i class="fab fa-github mr-2"></i> View Project
@@ -265,18 +284,37 @@ async function fetchGitHubProjects() {
       for (const project of projects) {
         try {
           const projectElement = document.createElement('div');
-          projectElement.className = 'card';
+          projectElement.className = 'card flex flex-col';
+          
+          // Fetch language statistics
+          const languageStatsResponse = await axios.get(`https://api.github.com/repos/${username}/${project.name}/languages`);
+          const languageStats = languageStatsResponse.data;
+          
+          // Calculate total bytes
+          const totalBytes = Object.values(languageStats).reduce((a, b) => a + b, 0);
+          
+          // Create language bar HTML
+          const languageBarHtml = Object.entries(languageStats)
+            .map(([lang, bytes]) => {
+              const percentage = (bytes / totalBytes) * 100;
+              const color = getLanguageColor(lang);
+              return `<div class="h-full" style="width: ${percentage}%; background-color: ${color};" title="${lang}: ${percentage.toFixed(1)}%"></div>`;
+            })
+            .join('');
           
           projectElement.innerHTML = `
             <div class="h-48 bg-gray-100 dark:bg-gray-800 overflow-hidden">
               <img src="https://opengraph.githubassets.com/1/${username}/${project.name}" alt="${project.name}" class="w-full h-full object-cover">
             </div>
-            <div class="p-4">
+            <div class="h-1 flex overflow-hidden">
+              ${languageBarHtml}
+            </div>
+            <div class="p-4 flex flex-col flex-grow">
               <h3 class="text-xl font-bold mb-2 dark:text-white">${project.name}</h3>
-              <p class="text-gray-600 dark:text-gray-300 mb-3">${project.description || 'No description available.'}</p>
-              <div class="flex flex-wrap gap-2 mb-4">
-                ${project.language ? `<span class="px-2 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 text-xs rounded">${project.language}</span>` : ''}
-                ${project.topics ? project.topics.map(topic => `<span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs rounded">${topic}</span>`).join('') : ''}
+              <p class="text-gray-600 dark:text-gray-300 mb-3 flex-grow">${project.description || 'No description available.'}</p>
+              <div class="flex flex-wrap gap-2 mb-4 mt-auto">
+                ${project.language ? `<span class="px-2 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 text-xs rounded inline-block">${project.language}</span>` : ''}
+                ${project.topics ? project.topics.map(topic => `<span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs rounded inline-block">${topic}</span>`).join('') : ''}
               </div>
               <a href="${project.html_url}" target="_blank" class="btn inline-block">
                 <i class="fab fa-github mr-2"></i> View Project
@@ -294,6 +332,29 @@ async function fetchGitHubProjects() {
       projectsContainer.innerHTML = '<p class="col-span-full text-center text-red-500">Error loading projects. Please try again later.</p>';
     }
   }
+}
+
+// Language colors mapping function
+function getLanguageColor(language) {
+  const colors = {
+    JavaScript: '#f1e05a',
+    TypeScript: '#2b7489',
+    Python: '#3572A5',
+    Java: '#b07219',
+    'C#': '#178600',
+    PHP: '#4F5D95',
+    Ruby: '#701516',
+    CSS: '#563d7c',
+    HTML: '#e34c26',
+    Go: '#00ADD8',
+    Shell: '#89e051',
+    Vue: '#41b883',
+    React: '#61dafb',
+    'C++': '#f34b7d',
+    C: '#555555'
+  };
+  
+  return colors[language] || '#858585';
 }
 
 // Fetch Medium posts

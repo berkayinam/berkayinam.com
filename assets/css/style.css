@@ -59,6 +59,17 @@
   .card {
     @apply bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 dark:bg-dark-secondary dark:shadow-black dark:text-gray-100;
   }
+  /* Language bar styles */
+  .card .language-bar {
+    @apply h-1 flex overflow-hidden;
+    min-height: 4px;
+    display: flex !important;
+    visibility: visible !important;
+  }
+  .card .language-bar > div {
+    @apply h-full;
+    min-width: 2px;
+  }
   .uniform-section {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
