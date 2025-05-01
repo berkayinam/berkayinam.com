@@ -14,9 +14,23 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: './index.html'
+      },
+      output: {
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name.endsWith('.pdf')) {
+            return 'assets/[name][extname]';
+          }
+          return 'assets/[name]-[hash][extname]';
+        }
       }
-    }
+    },
+    // Copy public assets
+    copyPublicDir: true,
   },
   // Configure base path
   base: '/',
+  // Configure assets handling
+  assetsInclude: ['**/*.pdf'],
+  // Configure public directory
+  publicDir: 'assets',
 }); 

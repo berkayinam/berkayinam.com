@@ -1,4 +1,4 @@
-import 'alpinejs';
+// import 'alpinejs';
 import axios from 'axios';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -163,175 +163,119 @@ function initTypewriter() {
   type();
 }
 
-// Fetch GitHub projects
+// Default projects data
+const defaultProjects = [
+  {
+    name: "Cloud-1",
+    description: "Cloud infrastructure and deployment automation",
+    html_url: "https://github.com/Dert-Ops/Cloud-1",
+    language: "Go"
+  },
+  {
+    name: "42-ft_transcendence",
+    description: "42 School Pong Game Project",
+    html_url: "https://github.com/berkayinam/42-ft_transcendence",
+    language: "TypeScript"
+  },
+  {
+    name: "42_inception",
+    description: "Docker and system administration project",
+    html_url: "https://github.com/berkayinam/42_inception",
+    language: "Shell"
+  },
+  {
+    name: "Kubernetes",
+    description: "Kubernetes deployment and configuration",
+    html_url: "https://github.com/berkayinam/Kubernetes",
+    language: "YAML"
+  },
+  {
+    name: "berkayinam.com",
+    description: "Personal website and portfolio",
+    html_url: "https://github.com/berkayinam/berkayinam.com",
+    language: "JavaScript"
+  },
+  {
+    name: "Docme-Ag",
+    description: "Documentation and automation tools",
+    html_url: "https://github.com/Dert-Ops/Docme-Ag",
+    language: "Python"
+  }
+];
+
+// Fetch GitHub projects with fallback
 async function fetchGitHubProjects() {
   const username = 'berkayinam';
   const projectsContainer = document.getElementById('projects-container');
-  
   if (!projectsContainer) return;
-  
-  try {
-    // GraphQL query to get pinned repositories
-    const response = await axios.post('https://api.github.com/graphql', {
-      query: `{
-        user(login: "${username}") {
-          pinnedItems(first: 6, types: REPOSITORY) {
-            nodes {
-              ... on Repository {
-                name
-                description
-                url
-                languages(first: 1) {
-                  nodes {
-                    name
-                  }
-                }
-                repositoryTopics(first: 10) {
-                  nodes {
-                    topic {
-                      name
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }`
-    }, {
-      headers: {
-        'Authorization': `bearer ${process.env.GITHUB_TOKEN}`
-      }
-    });
 
-    const projects = response.data.data.user.pinnedItems.nodes;
-    
+  try {
+    // Try to fetch from GitHub API first
+    const response = await axios.get(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6`);
+    const projects = response.data;
+
     // Clear loading placeholders
     projectsContainer.innerHTML = '';
     
     if (projects.length === 0) {
-      projectsContainer.innerHTML = '<p class="col-span-full text-center text-gray-500 dark:text-gray-400">No projects found.</p>';
+      renderProjects(defaultProjects);
       return;
     }
-    
-    // Add projects to the container
-    for (const project of projects) {
-      try {
-        const projectElement = document.createElement('div');
-        projectElement.className = 'card flex flex-col';
-        
-        const language = project.languages.nodes[0]?.name || '';
-        const topics = project.repositoryTopics.nodes.map(node => node.topic.name);
-        
-        // Fetch language statistics
-        const languageStatsResponse = await axios.get(`https://api.github.com/repos/${username}/${project.name}/languages`);
-        const languageStats = languageStatsResponse.data;
-        
-        // Calculate total bytes
-        const totalBytes = Object.values(languageStats).reduce((a, b) => a + b, 0);
-        
-        // Create language bar HTML
-        const languageBarHtml = Object.entries(languageStats)
-          .map(([lang, bytes]) => {
-            const percentage = (bytes / totalBytes) * 100;
-            const color = getLanguageColor(lang);
-            return `<div class="h-full" style="width: ${percentage}%; background-color: ${color};" title="${lang}: ${percentage.toFixed(1)}%"></div>`;
-          })
-          .join('');
-        
-        projectElement.innerHTML = `
-          <div class="h-48 bg-gray-100 dark:bg-gray-800 overflow-hidden">
-            <img src="https://opengraph.githubassets.com/1/${username}/${project.name}" alt="${project.name}" class="w-full h-full object-cover">
-          </div>
-          <div class="h-1 flex overflow-hidden">
-            ${languageBarHtml}
-          </div>
-          <div class="p-4 flex flex-col flex-grow">
-            <h3 class="text-xl font-bold mb-2 dark:text-white">${project.name}</h3>
-            <p class="text-gray-600 dark:text-gray-300 mb-3 flex-grow">${project.description || 'No description available.'}</p>
-            <div class="flex flex-wrap gap-2 mb-4 mt-auto">
-              ${language ? `<span class="px-2 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 text-xs rounded inline-block">${language}</span>` : ''}
-              ${topics.map(topic => `<span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs rounded inline-block">${topic}</span>`).join('')}
-            </div>
-            <a href="${project.url}" target="_blank" class="btn inline-block">
-              <i class="fab fa-github mr-2"></i> View Project
-            </a>
-          </div>
-        `;
-        
-        projectsContainer.appendChild(projectElement);
-      } catch (error) {
-        console.error(`Error creating project element for ${project.name}:`, error);
-      }
-    }
+
+    // Render fetched projects
+    renderProjects(projects);
     
   } catch (error) {
     console.error('Error fetching GitHub projects:', error);
-    // Fallback to REST API if GraphQL fails
-    try {
-      const response = await axios.get(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6`);
-      const projects = response.data;
-      
-      // Clear loading placeholders
-      projectsContainer.innerHTML = '';
-      
-      if (projects.length === 0) {
-        projectsContainer.innerHTML = '<p class="col-span-full text-center text-gray-500 dark:text-gray-400">No projects found.</p>';
-        return;
-      }
-      
-      // Add projects to the container
-      for (const project of projects) {
-        try {
-          const projectElement = document.createElement('div');
-          projectElement.className = 'card flex flex-col';
-          
-          // Fetch language statistics
-          const languageStatsResponse = await axios.get(`https://api.github.com/repos/${username}/${project.name}/languages`);
-          const languageStats = languageStatsResponse.data;
-          
-          // Calculate total bytes
-          const totalBytes = Object.values(languageStats).reduce((a, b) => a + b, 0);
-          
-          // Create language bar HTML
-          const languageBarHtml = Object.entries(languageStats)
-            .map(([lang, bytes]) => {
-              const percentage = (bytes / totalBytes) * 100;
-              const color = getLanguageColor(lang);
-              return `<div class="h-full" style="width: ${percentage}%; background-color: ${color};" title="${lang}: ${percentage.toFixed(1)}%"></div>`;
-            })
-            .join('');
-          
-          projectElement.innerHTML = `
-            <div class="h-48 bg-gray-100 dark:bg-gray-800 overflow-hidden">
-              <img src="https://opengraph.githubassets.com/1/${username}/${project.name}" alt="${project.name}" class="w-full h-full object-cover">
-            </div>
-            <div class="h-1 flex overflow-hidden">
-              ${languageBarHtml}
-            </div>
-            <div class="p-4 flex flex-col flex-grow">
-              <h3 class="text-xl font-bold mb-2 dark:text-white">${project.name}</h3>
-              <p class="text-gray-600 dark:text-gray-300 mb-3 flex-grow">${project.description || 'No description available.'}</p>
-              <div class="flex flex-wrap gap-2 mb-4 mt-auto">
-                ${project.language ? `<span class="px-2 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 text-xs rounded inline-block">${project.language}</span>` : ''}
-                ${project.topics ? project.topics.map(topic => `<span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs rounded inline-block">${topic}</span>`).join('') : ''}
-              </div>
-              <a href="${project.html_url}" target="_blank" class="btn inline-block">
-                <i class="fab fa-github mr-2"></i> View Project
-              </a>
-            </div>
-          `;
-          
-          projectsContainer.appendChild(projectElement);
-        } catch (error) {
-          console.error(`Error creating project element for ${project.name}:`, error);
-        }
-      }
-    } catch (fallbackError) {
-      console.error('Error fetching GitHub projects (fallback):', fallbackError);
-      projectsContainer.innerHTML = '<p class="col-span-full text-center text-red-500">Error loading projects. Please try again later.</p>';
-    }
+    // If API call fails, use default projects
+    renderProjects(defaultProjects);
   }
+}
+
+// Helper function to render projects
+function renderProjects(projects) {
+  const projectsContainer = document.getElementById('projects-container');
+  const username = 'berkayinam';
+  
+  // Clear loading placeholders
+  projectsContainer.innerHTML = '';
+  
+  if (projects.length === 0) {
+    projectsContainer.innerHTML = '<p class="col-span-full text-center text-gray-500 dark:text-gray-400">No projects found.</p>';
+    return;
+  }
+  
+  // Add projects to the container
+  projects.forEach(project => {
+    try {
+      const projectElement = document.createElement('div');
+      projectElement.className = 'card flex flex-col';
+      
+      const language = project.language || '';
+      const topics = project.topics || [];
+      
+      projectElement.innerHTML = `
+        <div class="h-48 bg-gray-100 dark:bg-gray-800 overflow-hidden">
+          <img src="https://opengraph.githubassets.com/1/${username}/${project.name}" alt="${project.name}" class="w-full h-full object-cover">
+        </div>
+        <div class="p-4 flex flex-col flex-grow">
+          <h3 class="text-xl font-bold mb-2 dark:text-white">${project.name}</h3>
+          <p class="text-gray-600 dark:text-gray-300 mb-3 flex-grow">${project.description || 'No description available.'}</p>
+          <div class="flex flex-wrap gap-2 mb-4 mt-auto">
+            ${language ? `<span class="px-2 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 text-xs rounded inline-block">${language}</span>` : ''}
+            ${topics.map(topic => `<span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs rounded inline-block">${topic}</span>`).join('')}
+          </div>
+          <a href="${project.html_url}" target="_blank" class="btn inline-block">
+            <i class="fab fa-github mr-2"></i> View Project
+          </a>
+        </div>
+      `;
+      
+      projectsContainer.appendChild(projectElement);
+    } catch (error) {
+      console.error(`Error creating project element for ${project.name}:`, error);
+    }
+  });
 }
 
 // Language colors mapping function
